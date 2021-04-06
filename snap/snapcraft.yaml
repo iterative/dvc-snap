@@ -7,8 +7,7 @@ grade: stable
 base: core18
 apps:
   aws:
-    # Workaround https://bugs.launchpad.net/snappy/+bug/1664427
-    command: usr/bin/python3 $SNAP/bin/dvc
+    command: bin/dvc
     aliases: [dvc]
 parts:
   aws:
