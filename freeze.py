@@ -1,5 +1,5 @@
 import argparse
-import importlib
+import importlib.util
 import pathlib
 import textwrap
 
