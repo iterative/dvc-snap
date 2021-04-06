@@ -8,7 +8,6 @@ base: core18
 apps:
   aws:
     command: bin/dvc
-    aliases: [dvc]
 parts:
   aws:
     plugin: python
