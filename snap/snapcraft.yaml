@@ -12,6 +12,7 @@ layout:
 apps:
   dvc:
     command: bin/dvc
+    completer: completion.sh
 parts:
   dvc:
     plugin: python
