@@ -12,6 +12,8 @@ apps:
 parts:
   dvc:
     plugin: python
+    python-packages:
+    - .[gs, s3, azure, oss, ssh, gdrive, webdav]
     source: https://github.com/iterative/dvc.git
     stage-packages:
     - git
@@ -19,8 +21,6 @@ parts:
         snapcraftctl pull
         git diff --quiet || error_dirty_build
         echo 'PKG = "snap"' > dvc/utils/build.py
-        # install all optional extras
-        sed -ri 's/(=install_requires)/\1+all_remotes/' setup.py
         # ensure dvc knows the state isn't really dirty
         sed -rin 's/.*git.*diff.*--quiet.*//' dvc/version.py
     override-build: |
