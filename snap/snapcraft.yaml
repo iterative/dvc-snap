@@ -6,6 +6,9 @@ confinement: classic
 grade: stable
 base: core18
 license: Apache-2.0
+layout:
+  /etc/dvc:
+    bind: $SNAP_DATA/etc/dvc
 apps:
   dvc:
     command: bin/dvc
