@@ -1,7 +1,6 @@
 name: dvc
 summary: Data Version Control
 description: Git for Data & Models https://dvc.org
-version: git
 confinement: classic
 grade: stable
 base: core18
@@ -37,4 +36,5 @@ parts:
         touch $SNAPCRAFT_PART_INSTALL/completion.sh
     override-stage: |
         snapcraftctl stage
+        snapcraftctl set-version $(usr/bin/python3 -m dvc --version)
         usr/bin/python3 -m dvc completion -s bash > completion.sh
