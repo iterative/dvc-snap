@@ -13,6 +13,8 @@ apps:
   dvc:
     command: bin/dvc
     completer: completion.sh
+    environment:
+      XDG_CONFIG_DIRS: /etc
 parts:
   dvc:
     plugin: python
