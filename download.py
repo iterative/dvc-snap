@@ -1,13 +1,8 @@
-import os
 import pathlib
-import posixpath
 import shutil
-import tarfile
-
-import wget
+from subprocess import STDOUT, check_call
 
 VERSION = "2.0.17"
-URL = f"https://github.com/iterative/dvc/archive/{VERSION}.tar.gz"
 
 path = pathlib.Path(__file__).parent.absolute()
 dvc = path / "dvc"
@@ -17,16 +12,5 @@ try:
 except FileNotFoundError:
     pass
 
-tar = path / posixpath.basename(URL)
-
-try:
-    tar.unlink()
-except FileNotFoundError:
-    pass
-
-wget.download(URL, out=os.fspath(tar))
-
-with tarfile.open(tar) as tobj:
-    tobj.extractall()
-
-os.rename(tar.with_name(f"dvc-{VERSION}"), dvc)
+check_call(["git", "clone", "https://github.com/iterative/dvc"], stderr=STDOUT)
+check_call(["git", "checkout", VERSION], stderr=STDOUT, cwd=dvc)
