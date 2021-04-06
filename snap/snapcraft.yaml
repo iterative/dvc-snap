@@ -6,9 +6,9 @@ confinement: classic
 grade: stable
 base: core18
 apps:
-  aws:
+  dvc:
     command: bin/dvc
 parts:
-  aws:
+  dvc:
     plugin: python
     source: https://github.com/iterative/dvc.git
