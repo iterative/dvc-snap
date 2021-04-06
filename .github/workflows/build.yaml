@@ -23,6 +23,7 @@ jobs:
       run: |
         sudo snap install --dangerous --classic ${{ steps.snapcraft.outputs.snap }}
         dvc doctor
+        dvc list https://github.com/iterative/dvc
         sudo snap remove dvc
     - name: Publish to the stable channel
       uses: snapcore/action-publish@v1
