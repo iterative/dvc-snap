@@ -16,17 +16,13 @@ jobs:
       run: |
         pip install wheel
         pip install -r requirements.txt
-    - name: Download dvc
-      run: python download.py
     - name: Build the package
       uses: snapcore/action-build@v1
       id: snapcraft
-      with:
-        path: dvc
     - name: Test the package
       run: |
         sudo snap install --dangerous --classic ${{ steps.snapcraft.outputs.snap }}
-        dvc version
+        dvc doctor
         sudo snap remove dvc
     - name: Publish to the stable channel
       uses: snapcore/action-publish@v1
