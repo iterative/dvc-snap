@@ -1,0 +1,28 @@
+name: Build package
+on:
+  push:
+    branches:
+    - main
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download dvc
+      run: python download.py
+    - name: Build the package
+      uses: snapcore/action-build@v1
+      id: snapcraft
+      with:
+        path: dvc
+    - name: Test the package
+      run: |
+        sudo snap install --dangerous --classic ${{ steps.snapcraft.outputs.snap }}
+        dvc version
+        sudo snap remove dvc
+    - name: Publish to the stable channel
+      uses: snapcore/action-publish@v1
+      with:
+        store_login: ${{ secrets.STORE_LOGIN }}
+        snap: ${{ steps.snapcraft.outputs.snap }}
+        release: stable,v2/stable
