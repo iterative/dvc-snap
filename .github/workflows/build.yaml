@@ -2,7 +2,7 @@ name: Build package
 on:
   push:
     branches:
-    - main
+    - master
 jobs:
   snap:
     runs-on: ubuntu-latest
