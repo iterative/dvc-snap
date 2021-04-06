@@ -23,6 +23,7 @@ parts:
     override-pull: |
         snapcraftctl pull
         git diff --quiet || error_dirty_build
+        $SNAP/usr/bin/python3 --version
         $SNAP/usr/bin/python3 $SNAPCRAFT_PROJECT_DIR/freeze.py $(pwd)/dvc
         # install all optional extras
         sed -ri 's/(=install_requires)/\1+gs + s3 + azure + ssh + gdrive/' setup.py
