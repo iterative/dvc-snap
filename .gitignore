@@ -1,1 +1,3 @@
-/dvc
+/parts
+/snap/.snapcraft
+/*.snap

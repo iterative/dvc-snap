@@ -4,6 +4,7 @@ description: Git for Data & Models https://dvc.org
 version: "2.0.17"
 confinement: classic
 grade: stable
+base: core18
 apps:
   aws:
     # Workaround https://bugs.launchpad.net/snappy/+bug/1664427
