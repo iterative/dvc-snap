@@ -20,7 +20,7 @@ parts:
         git diff --quiet || error_dirty_build
         echo 'PKG = "snap"' > dvc/utils/build.py
         # install all optional extras
-        sed -ri 's/(=install_requires)/\1+all_remotes+hdfs/' setup.py
+        sed -ri 's/(=install_requires)/\1+all_remotes/' setup.py
         # ensure dvc knows the state isn't really dirty
         sed -rin 's/.*git.*diff.*--quiet.*//' dvc/version.py
     override-build: |
