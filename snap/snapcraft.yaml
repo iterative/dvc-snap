@@ -13,6 +13,11 @@ parts:
   dvc:
     plugin: python
     source: https://github.com/iterative/dvc.git
+    build-snaps:
+    - snapd
+    build-packages:
+    - git
+    - libc-dev
     stage-packages:
     - git
     override-pull: |
