@@ -8,6 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2.1.4
+      with:
+        python-version: 3.8
+    - name: Install deps
+      run: |
+        pip install wheel
+        pip install -r requirements.txt
     - name: Download dvc
       run: python download.py
     - name: Build the package
