@@ -19,7 +19,7 @@ parts:
   dvc:
     plugin: python
     source: https://github.com/iterative/dvc.git
-    source-tag: 2.4.2
+    source-tag: 2.4.3
     build-snaps:
     - snapd
     build-packages:
