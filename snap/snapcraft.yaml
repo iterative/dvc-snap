@@ -33,7 +33,7 @@ parts:
         $SNAP/usr/bin/python3 --version
         $SNAP/usr/bin/python3 $SNAPCRAFT_PROJECT_DIR/freeze.py $(pwd)/dvc
         # install all optional extras
-        sed -ri 's/(=install_requires)/\1+gs + s3 + azure + ssh + gdrive/' setup.py
+        sed -ri 's/(install_requires=install_requires)/\1+list(set(requirements["all"])-{"hdfs"})/' setup.py
     override-build: |
         snapcraftctl build
         # prevent user site packages interfering with this snap - reference:
