@@ -28,6 +28,8 @@ parts:
     stage-packages:
     - git
     python-packages:
+    - pip
+    - setuptools
     - wheel
     override-pull: |
         snapcraftctl pull
