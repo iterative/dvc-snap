@@ -4,7 +4,7 @@ description: Git for Data & Models https://dvc.org
 adopt-info: dvc
 confinement: classic
 grade: stable
-base: core18
+base: core20
 license: Apache-2.0
 layout:
   /etc/dvc:
