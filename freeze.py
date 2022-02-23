@@ -1,7 +1,6 @@
 import argparse
 import importlib.util
 import pathlib
-import re
 import textwrap
 
 parser = argparse.ArgumentParser()
@@ -27,10 +26,3 @@ version = dvc_version.__version__
 )
 
 (dvc / "utils" / "build.py").write_text('PKG = "snap"')
-
-# dvc = pathlib.Path("/home/cc16/gits/iterative/dvc")
-setup = (dvc.parent / "setup.cfg").read_text()
-# TODO: hdfs oss ssh webdav
-extras = ")s\n    %(".join("azure gdrive gs ssh s3".split())
-setup = re.sub(r"^(install_requires\s?=)$", "\\1\n    %(" + extras + ")s", setup, flags=re.M)
-(dvc.parent / "setup.cfg").write_text(setup)
