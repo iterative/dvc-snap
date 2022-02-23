@@ -15,8 +15,27 @@ apps:
     completer: completion.sh
     environment:
       XDG_CONFIG_DIRS: /etc
+      #PYTHONPATH: $SNAP/lib/python3.8/site-packages
+      #LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
+      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin"
 parts:
+  dvc-libs:
+    plugin: nil
+    stage-packages:
+    - git
+    - libpython3-stdlib
+    - libpython3.8-stdlib
+    - libpython3.8-minimal
+    - python3-pip
+    - python3-setuptools
+    - python3-wheel
+    - python3-venv
+    - python3-minimal
+    - python3-distutils
+    - python3-pkg-resources
+    - python3.8-minimal
   dvc:
+    after: [dvc-libs]
     plugin: python
     source: https://github.com/iterative/dvc.git
     source-tag: 2.9.5
@@ -25,10 +44,11 @@ parts:
     build-packages:
     - git
     - libc-dev
-    stage-packages:
-    - git
-    - python3
-    - python3-venv
+    #- python3.8-dev
+    #- pkg-config
+    #build-environment:
+    #- CFLAGS: "$(pkg-config python-3.8 --cflags)"
+    #- SNAPCRAFT_PYTHON_VENV_ARGS: "--system-site-packages"
     override-pull: |
         snapcraftctl pull
         git diff --quiet || error_dirty_build
@@ -38,10 +58,14 @@ parts:
         snapcraftctl build
         # TODO: hdfs oss ssh webdav
         $SNAPCRAFT_PART_INSTALL/bin/python3 -m pip install -U .[azure,gdrive,gs,ssh,s3]
+        $SNAPCRAFT_PART_INSTALL/bin/python3 -m dvc --version
         find "${SNAPCRAFT_PART_INSTALL}" -type f -executable -print0 | xargs -0 sed -i "1 s|^#\\!${SNAPCRAFT_PART_INSTALL}/bin/python3.*$|#\\!/usr/bin/env python3|"
         # make plugin aware that a file (generated later) needs to be staged
         touch $SNAPCRAFT_PART_INSTALL/completion.sh
+        # python3 fixup symlink (snapcraft bug)
+        ln -sf ../usr/bin/python3.8 $SNAPCRAFT_PART_INSTALL/bin/python3
     override-stage: |
         snapcraftctl stage
+        export PYTHONPATH=lib/python3.8/site-packages
         snapcraftctl set-version $(python3 -m dvc --version)
         python3 -m dvc completion -s bash > completion.sh
