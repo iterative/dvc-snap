@@ -1,7 +1,7 @@
 name: Update package
 on:
   schedule:
-    - cron: '0 0 * * *'
+  - cron: '0 0 * * *'
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -9,20 +9,19 @@ jobs:
     - uses: actions/checkout@v2
     - name: get latest dvc version
       id: latest
-      shell: bash
       run: |
         version=$(./latest.sh)
         echo "::set-output name=version::$version"
     - name: try update
       id: update
-      shell: bash
       run: |
         echo latest version ${{ steps.latest.outputs.version }}
         ./update.sh ${{ steps.latest.outputs.version }}
         echo "::set-output name=changes::$(git diff)"
     - name: create PR
       if: ${{ steps.update.outputs.changes != '' }}
-      uses: peter-evans/create-pull-request@v3
-      with:
-        commit-message: dvc ${{ steps.latest.outputs.version }}
-        title: dvc ${{ steps.latest.outputs.version }}
+      run: |
+        git config --global user.name "Olivaw[bot]"
+        git config --global user.email "64868532+iterative-olivaw@users.noreply.github.com"
+        git commit -am "dvc ${{ steps.latest.outputs.version }}"
+        gh pr create --title "dvc ${{ steps.latest.outputs.version }}"
