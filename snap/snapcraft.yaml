@@ -15,8 +15,6 @@ apps:
     completer: completion.sh
     environment:
       XDG_CONFIG_DIRS: /etc
-      #PYTHONPATH: $SNAP/lib/python3.8/site-packages
-      #LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
       PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin"
 parts:
   dvc-libs:
@@ -42,11 +40,6 @@ parts:
     build-packages:
     - git
     - libc-dev
-    #- python3.8-dev
-    #- pkg-config
-    #build-environment:
-    #- CFLAGS: "$(pkg-config python-3.8 --cflags)"
-    #- SNAPCRAFT_PYTHON_VENV_ARGS: "--system-site-packages"
     override-pull: |
         snapcraftctl pull
         git diff --quiet || error_dirty_build
