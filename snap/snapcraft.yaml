@@ -15,7 +15,7 @@ apps:
     completer: completion.sh
     environment:
       XDG_CONFIG_DIRS: /etc
-      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin"
+      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin:$PATH"
 parts:
   dvc-libs:
     plugin: nil
