@@ -25,3 +25,5 @@ jobs:
         git config --global user.email "64868532+iterative-olivaw@users.noreply.github.com"
         git commit -am "dvc ${{ steps.latest.outputs.version }}"
         gh pr create --title "dvc ${{ steps.latest.outputs.version }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
