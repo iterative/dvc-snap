@@ -1,7 +1,7 @@
 name: dvc
 summary: Data Version Control
 description: Git for Data & Models https://dvc.org
-version: 2.40.0
+version: null
 confinement: classic
 grade: stable
 base: core20
@@ -51,7 +51,7 @@ parts:
     after: [dvc-libs]
     plugin: python
     source: https://github.com/iterative/dvc.git
-    source-tag: 2.40.0
+    source-tag: null
     build-packages:
     - git
     - libc-dev
