@@ -20,7 +20,7 @@ apps:
       JAVA_HOME: "$SNAP/java-se-7u75-ri"
       HADOOP_HOME: "$SNAP/hadoop-2.7.2"
       CLASSPATH: "$($HADOOP_HOME/bin/hdfs classpath --glob)"
-      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin"
+      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH"
 parts:
   dvc-libs:
     plugin: nil
