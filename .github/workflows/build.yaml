@@ -15,7 +15,7 @@ jobs:
         dvc list https://github.com/iterative/dvc
         dvc get https://github.com/iterative/dataset-registry get-started/data.xml -o data.xml
         sudo snap remove dvc
-    - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: snapcore/action-publish@v1
       with:
         store_login: ${{ secrets.STORE_LOGIN }}
