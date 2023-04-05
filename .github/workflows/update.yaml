@@ -1,5 +1,6 @@
 name: Update package
 on:
+  pull_request:
   push:
   schedule:
   - cron: '0 0 * * *'
@@ -12,6 +13,8 @@ jobs:
     - name: get latest dvc version
       id: latest
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         version=$(./latest.sh)
         echo "version=$version" >> $GITHUB_OUTPUT
@@ -23,7 +26,7 @@ jobs:
         ./update.sh ${{ steps.latest.outputs.version }}
         echo "changes=$(git diff | tr '\n' ' ')" >> $GITHUB_OUTPUT
     - name: create PR
-      if: ${{ steps.update.outputs.changes != '' }}
+      if: ${{ steps.update.outputs.changes != '' && github.event_name != 'pull_request' }}
       run: |
         cml pr create \
           --token="${{ secrets.GITHUB_TOKEN }}" \
