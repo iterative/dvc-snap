@@ -59,7 +59,7 @@ parts:
         snapcraftctl pull
         git diff --quiet || error_dirty_build
         $SNAP/usr/bin/python3 --version
-        echo 'PKG = "snap"' > dvc/utils/build.py
+        echo 'PKG = "snap"' > dvc/_build.py
     override-build: |
         snapcraftctl build
         $SNAPCRAFT_PART_INSTALL/bin/python3 -m pip install -U .[all]
