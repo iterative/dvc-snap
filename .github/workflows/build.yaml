@@ -17,7 +17,8 @@ jobs:
         sudo snap remove dvc
     - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: snapcore/action-publish@v1
+      env:
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
       with:
-        store_login: ${{ secrets.STORE_LOGIN }}
         snap: ${{ steps.snapcraft.outputs.snap }}
         release: stable,v2/stable
