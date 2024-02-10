@@ -4,7 +4,7 @@ description: Git for Data & Models https://dvc.org
 version: 3.44.0
 confinement: classic
 grade: stable
-base: core20
+base: core22
 license: Apache-2.0
 layout:
   /etc/dvc:
@@ -31,8 +31,8 @@ parts:
     stage-packages:
     - git
     - libpython3-stdlib
-    - libpython3.9-stdlib
-    - libpython3.9-minimal
+    - libpython3.10-stdlib
+    - libpython3.10-minimal
     - python3-pip
     - python3-setuptools
     - python3-wheel
@@ -40,7 +40,7 @@ parts:
     - python3-minimal
     - python3-distutils
     - python3-pkg-resources
-    - python3.9-minimal
+    - python3.10-minimal
     override-build: |
         snapcraftctl build
         curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
