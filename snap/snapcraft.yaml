@@ -22,12 +22,13 @@ apps:
       CLASSPATH: "$($HADOOP_HOME/bin/hdfs classpath --glob)"
       PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH"
 parts:
-  dvc-libs:
-    plugin: nil
+  dvc:
+    plugin: python
+    source: https://github.com/iterative/dvc.git
+    source-tag: 3.44.0
     build-packages:
-    - curl
-    - tar
-    - gzip
+    - git
+    - libc-dev
     stage-packages:
     - git
     - libpython3-stdlib
@@ -41,28 +42,13 @@ parts:
     - python3-distutils
     - python3-pkg-resources
     - python3.10-minimal
-    override-build: |
-        craftctl default
-        curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
-        curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/hadoop-2.7.2.tar.gz
-        tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz -C $CRAFT_PART_INSTALL
-        tar -xzf hadoop-2.7.2.tar.gz -C $CRAFT_PART_INSTALL
-  dvc:
-    after: [dvc-libs]
-    plugin: python
-    source: https://github.com/iterative/dvc.git
-    source-tag: 3.44.0
-    build-packages:
-    - git
-    - libc-dev
     override-pull: |
         craftctl default
         git diff --quiet || error_dirty_build
-        $SNAP/usr/bin/python3 --version
         echo 'PKG = "snap"' > dvc/_build.py
     override-build: |
         craftctl default
-        $CRAFT_PART_INSTALL/bin/python3 -m pip install -U .[all]
-        $CRAFT_PART_INSTALL/bin/python3 -m dvc --version
-        find "${CRAFT_PART_INSTALL}" -type f -executable -print0 | xargs -0 sed -i "1 s|^#\\!${CRAFT_PART_INSTALL}/bin/python3.*$|#\\!/usr/bin/env python3|"
-        $CRAFT_PART_INSTALL/bin/python3 -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
+        $PARTS_PYTHON_INTERPRETER -m pip install -U pip setuptools_scm build
+        $PARTS_PYTHON_INTERPRETER -m pip install -U .[all]
+        $PARTS_PYTHON_INTERPRETER -m dvc --version
+        $PARTS_PYTHON_INTERPRETER -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
