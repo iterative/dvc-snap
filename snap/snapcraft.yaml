@@ -42,7 +42,7 @@ parts:
     - python3-pkg-resources
     - python3.10-minimal
     override-build: |
-        craftctl build
+        craftctl default
         curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
         curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/hadoop-2.7.2.tar.gz
         tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz -C $CRAFT_PART_INSTALL
