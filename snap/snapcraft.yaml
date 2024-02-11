@@ -53,7 +53,7 @@ parts:
     source: https://github.com/iterative/dvc.git
     source-tag: 3.44.0
     build-environment:
-      - PARTS_PYTHON_INTERPRETER: python3.9
+      - SNAPCRAFT_PYTHON_INTERPRETER: python3.9
     build-packages:
     - git
     - libc-dev
