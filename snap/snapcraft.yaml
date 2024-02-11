@@ -71,3 +71,4 @@ parts:
         $SNAPCRAFT_PART_INSTALL/bin/python3 -m dvc completion -s bash > $SNAPCRAFT_PART_INSTALL/completion.sh
         # python3 fixup symlink (snapcraft bug)
         ln -sf ../usr/bin/python3.9 $SNAPCRAFT_PART_INSTALL/bin/python3
+        ln -sf ../usr/bin/python3.9 $SNAPCRAFT_PART_INSTALL/bin/python
