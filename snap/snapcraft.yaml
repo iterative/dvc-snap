@@ -26,6 +26,11 @@ parts:
     plugin: python
     source: https://github.com/iterative/dvc.git
     source-tag: 3.44.0
+    python-packages:
+    - pip
+    - setuptools
+    - wheel
+    - .[all]
     build-packages:
     - git
     - libc-dev
@@ -48,7 +53,5 @@ parts:
         echo 'PKG = "snap"' > dvc/_build.py
     override-build: |
         craftctl default
-        $PARTS_PYTHON_INTERPRETER -m pip install -U pip setuptools_scm build
-        $PARTS_PYTHON_INTERPRETER -m pip install -U .[all]
         $PARTS_PYTHON_INTERPRETER -m dvc --version
         $PARTS_PYTHON_INTERPRETER -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
