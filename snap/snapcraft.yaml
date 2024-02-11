@@ -13,7 +13,7 @@ layout:
     bind: $SNAP_DATA/etc/hadoop
 apps:
   dvc:
-    command: usr/bin/dvc
+    command: usr/bin/python3 -m dvc
     completer: completion.sh
     environment:
       XDG_CONFIG_DIRS: /etc
