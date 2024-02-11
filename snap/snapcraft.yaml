@@ -72,3 +72,4 @@ parts:
         # python3 fixup symlink (snapcraft bug)
         ln -sf ../usr/bin/python3.9 $SNAPCRAFT_PART_INSTALL/bin/python3
         ln -sf ../usr/bin/python3.9 $SNAPCRAFT_PART_INSTALL/bin/python
+        ln -sf ../usr/bin/python3.9 $SNAPCRAFT_PART_INSTALL/bin/python3.9
