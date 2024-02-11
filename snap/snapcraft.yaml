@@ -9,31 +9,26 @@ license: Apache-2.0
 layout:
   /etc/dvc:
     bind: $SNAP_DATA/etc/dvc
-  /etc/hadoop:
-    bind: $SNAP_DATA/etc/hadoop
 apps:
   dvc:
-    command: bin/python3 $SNAP/bin/dvc
+    command: usr/bin/dvc
     completer: completion.sh
     environment:
       XDG_CONFIG_DIRS: /etc
-      JAVA_HOME: "$SNAP/java-se-7u75-ri"
-      HADOOP_HOME: "$SNAP/hadoop-2.7.2"
-      CLASSPATH: "$($HADOOP_HOME/bin/hdfs classpath --glob)"
-      PATH: "/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$SNAP/usr/bin:$SNAP/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH"
 parts:
   dvc:
     plugin: python
     source: https://github.com/iterative/dvc.git
     source-tag: 3.44.0
+    python-packages:
+    - pip
+    - setuptools
+    - wheel
+    - .[all]
     build-attributes:
     - enable-patchelf
-    build-packages:
-    - git
-    - libc-dev
     stage-packages:
     - git
-    - libc6
     - libpython3-stdlib
     - libpython3.10-stdlib
     - libpython3.10-minimal
@@ -45,13 +40,12 @@ parts:
     - python3-distutils
     - python3-pkg-resources
     - python3.10-minimal
-    override-pull: |
-        craftctl default
-        git diff --quiet || error_dirty_build
-        echo 'PKG = "snap"' > dvc/_build.py
-    override-build: |
-        craftctl default
-        $PARTS_PYTHON_INTERPRETER -m pip install -U pip setuptools_scm build
-        $PARTS_PYTHON_INTERPRETER -m pip install -U .[all]
-        $PARTS_PYTHON_INTERPRETER -m dvc --version
-        $PARTS_PYTHON_INTERPRETER -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
+      #    override-pull: |
+      #        craftctl default
+      #        git diff --quiet || error_dirty_build
+      #        echo 'PKG = "snap"' > dvc/_build.py
+      #    override-build: |
+      #        craftctl default
+      #        $PARTS_PYTHON_INTERPRETER -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
+      #        find "${CRAFT_STAGE}/bin" -type f -executable -exec sed -i 's/!\/usr\/bin\/env python3.12/!\/usr\/bin\/env python3/' {} \;
+      #        sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' "${CRAFT_STAGE}/pyvenv.cfg" 
