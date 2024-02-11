@@ -26,11 +26,14 @@ parts:
     plugin: python
     source: https://github.com/iterative/dvc.git
     source-tag: 3.44.0
+    build-attributes:
+    - enable-patchelf
     build-packages:
     - git
     - libc-dev
     stage-packages:
     - git
+    - libc6
     - libpython3-stdlib
     - libpython3.10-stdlib
     - libpython3.10-minimal
