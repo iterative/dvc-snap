@@ -4,7 +4,7 @@ jobs:
   snap:
     runs-on: ubuntu-20.04  # https://github.com/snapcore/action-build/issues/42
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: snapcore/action-build@v1
       id: snapcraft
     - name: Test the package
@@ -22,3 +22,17 @@ jobs:
       with:
         snap: ${{ steps.snapcraft.outputs.snap }}
         release: stable,v2/stable
+
+  notify:
+    if: github.ref == 'refs/heads/main' && failure()
+    needs: [snap]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.2.1
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE: 'Package build failed for ${{ github.repository }}'
+        SLACK_TITLE: CI Status
+        SLACK_USERNAME: dvc-pkg-build
