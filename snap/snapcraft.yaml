@@ -34,17 +34,17 @@ parts:
     stage-packages:
     - git
     - libpython3-stdlib
-    - libpython3.10-stdlib
-    - libpython3.10-minimal
+    - libpython3.11-stdlib
+    - libpython3.11-minimal
     - python3-pip
     - python3-setuptools
     - python3-wheel
-    - python3.10-venv
+    - python3.11-venv
     - python3-venv
     - python3-minimal
     - python3-distutils
     - python3-pkg-resources
-    - python3.10-minimal
+    - python3.11-minimal
     override-build: |
         snapcraftctl build
         curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
@@ -57,7 +57,7 @@ parts:
     source: https://github.com/iterative/dvc.git
     source-tag: 3.56.0
     build-environment:
-      - SNAPCRAFT_PYTHON_INTERPRETER: python3.10
+      - SNAPCRAFT_PYTHON_INTERPRETER: python3.11
     build-packages:
     - git
     - libc-dev
@@ -73,6 +73,6 @@ parts:
         find "${SNAPCRAFT_PART_INSTALL}" -type f -executable -print0 | xargs -0 sed -i "1 s|^#\\!${SNAPCRAFT_PART_INSTALL}/bin/python3.*$|#\\!/usr/bin/env python3|"
         $SNAPCRAFT_PART_INSTALL/bin/python3 -m dvc completion -s bash > $SNAPCRAFT_PART_INSTALL/completion.sh
         # python3 fixup symlink (snapcraft bug)
-        ln -sf ../usr/bin/python3.10 $SNAPCRAFT_PART_INSTALL/bin/python3	
-        ln -sf ../usr/bin/python3.10 $SNAPCRAFT_PART_INSTALL/bin/python
-        ln -sf ../usr/bin/python3.10 $SNAPCRAFT_PART_INSTALL/bin/python3.10
+        ln -sf ../usr/bin/python3.11 $SNAPCRAFT_PART_INSTALL/bin/python3	
+        ln -sf ../usr/bin/python3.11 $SNAPCRAFT_PART_INSTALL/bin/python
+        ln -sf ../usr/bin/python3.11 $SNAPCRAFT_PART_INSTALL/bin/python3.11
