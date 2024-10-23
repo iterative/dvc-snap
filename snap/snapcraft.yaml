@@ -11,6 +11,8 @@ layout:
     bind: $SNAP_DATA/etc/dvc
   /etc/hadoop:
     bind: $SNAP_DATA/etc/hadoop
+environment:
+  PYTHONPATH: "$SNAP/lib/python3.12/site-packages:${PYTHONPATH}"
 apps:
   dvc:
     command: bin/python3 $SNAP/bin/dvc
@@ -58,6 +60,8 @@ parts:
     source-tag: 3.56.0
     build-environment:
       - SNAPCRAFT_PYTHON_INTERPRETER: python3.11
+    stage:
+      - -pyvenv.cfg
     build-packages:
     - git
     - libc-dev
