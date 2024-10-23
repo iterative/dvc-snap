@@ -11,8 +11,6 @@ layout:
     bind: $SNAP_DATA/etc/dvc
   /etc/hadoop:
     bind: $SNAP_DATA/etc/hadoop
-environment:
-  PYTHONPATH: "$SNAP/lib/python3.10/site-packages:${PYTHONPATH}"
 apps:
   dvc:
     command: bin/python3 $SNAP/bin/dvc
