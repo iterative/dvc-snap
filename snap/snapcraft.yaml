@@ -11,6 +11,10 @@ layout:
     bind: $SNAP_DATA/etc/dvc
   /etc/hadoop:
     bind: $SNAP_DATA/etc/hadoop
+architectures:
+  - build-on: [amd64]
+  - build-on: [amd64]
+    run-on: [arm64]
 environment:
   PYTHONPATH: "$SNAP/lib/python3.12/site-packages:${PYTHONPATH}"
 apps:
