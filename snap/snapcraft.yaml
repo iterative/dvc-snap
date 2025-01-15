@@ -11,8 +11,6 @@ layout:
     bind: $SNAP_DATA/etc/dvc
   /etc/hadoop:
     bind: $SNAP_DATA/etc/hadoop
-environment:
-  PYTHONPATH: "$SNAP/lib/python3.12/site-packages:${PYTHONPATH}"
 apps:
   dvc:
     command: bin/python3 $SNAP/bin/dvc
@@ -50,8 +48,6 @@ parts:
     source-tag: 3.59.0
     build-environment:
       - SNAPCRAFT_PYTHON_INTERPRETER: python3.12
-    stage:
-      - -pyvenv.cfg
     build-packages:
     - git
     - libc-dev
@@ -70,3 +66,7 @@ parts:
         ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python3
         ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python
         ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python3.12
+        # https://forum.snapcraft.io/t/upgrading-classic-snap-to-core24-using-snapcraft-8-3-causes-python-3-12-errors-at-runtime/41045/11
+        cat "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg"
+        sed -i "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg" -e 's@^home = '"${SNAPCRAFT_STAGE}"'/usr/bin$@home = /snap/dvc/current/usr/bin@g'
+        cat "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg"
