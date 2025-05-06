@@ -37,10 +37,6 @@ parts:
     - python3.12-venv
     override-build: |
         snapcraftctl build
-        curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz
-        curl -sSLO https://s3-us-east-2.amazonaws.com/dvc-public/dvc-test/hadoop-2.7.2.tar.gz
-        tar -xzf openjdk-7u75-b13-linux-x64-18_dec_2014.tar.gz -C $SNAPCRAFT_PART_INSTALL
-        tar -xzf hadoop-2.7.2.tar.gz -C $SNAPCRAFT_PART_INSTALL
   dvc:
     after: [dvc-libs]
     plugin: python
