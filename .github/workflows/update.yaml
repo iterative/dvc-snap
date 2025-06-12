@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: iterative/setup-cml@v3
     - name: get latest dvc version
       id: latest
       shell: bash
