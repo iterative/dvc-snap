@@ -24,6 +24,8 @@ apps:
 package-repositories:
  - type: apt
    ppa: deadsnakes/ppa
+ - type: apt
+   ppa: git-core/ppa
 parts:
   dvc-libs:
     plugin: nil
