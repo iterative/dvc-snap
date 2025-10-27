@@ -4,7 +4,7 @@ description: Git for Data & Models https://dvc.org
 version: 3.63.0
 confinement: classic
 grade: stable
-base: core20
+base: core24
 license: Apache-2.0
 layout:
   /etc/dvc:
@@ -24,47 +24,28 @@ apps:
 package-repositories:
  - type: apt
    ppa: deadsnakes/ppa
- - type: apt
-   ppa: git-core/ppa
 parts:
-  dvc-libs:
-    plugin: nil
-    build-packages:
-    - curl
-    - tar
-    - gzip
-    stage-packages:
-    - git
-    - python3.12
-    - python3.12-venv
-    override-build: |
-        snapcraftctl build
   dvc:
-    after: [dvc-libs]
     plugin: python
     source: https://github.com/iterative/dvc.git
     source-tag: 3.63.0
-    build-environment:
-      - SNAPCRAFT_PYTHON_INTERPRETER: python3.12
     build-packages:
     - git
-    - libc-dev
+    stage-packages:
+    - git
+    - python3.14
+    - python3.14-venv
+    build-environment:
+    - PARTS_PYTHON_INTERPRETER: python3.14
+    python-packages:
+    - ".[all]"
     override-pull: |
-        snapcraftctl pull
+        craftctl default
         git diff --quiet || error_dirty_build
-        $SNAP/usr/bin/python3 --version
         echo 'PKG = "snap"' > dvc/_build.py
     override-build: |
-        snapcraftctl build
-        $SNAPCRAFT_PART_INSTALL/bin/python3 -m pip install -U .[all]
-        $SNAPCRAFT_PART_INSTALL/bin/python3 -m dvc --version
-        find "${SNAPCRAFT_PART_INSTALL}" -type f -executable -print0 | xargs -0 sed -i "1 s|^#\\!${SNAPCRAFT_PART_INSTALL}/bin/python3.*$|#\\!/usr/bin/env python3|"
-        $SNAPCRAFT_PART_INSTALL/bin/python3 -m dvc completion -s bash > $SNAPCRAFT_PART_INSTALL/completion.sh
-        # python3 fixup symlink (snapcraft bug)
-        ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python3
-        ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python
-        ln -sf ../usr/bin/python3.12 $SNAPCRAFT_PART_INSTALL/bin/python3.12
-        # https://forum.snapcraft.io/t/upgrading-classic-snap-to-core24-using-snapcraft-8-3-causes-python-3-12-errors-at-runtime/41045/11
-        cat "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg"
-        sed -i "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg" -e 's@^home = '"${SNAPCRAFT_STAGE}"'/usr/bin$@home = /snap/dvc/current/usr/bin@g'
-        cat "${SNAPCRAFT_PART_INSTALL}/pyvenv.cfg"
+        craftctl default
+        $PARTS_PYTHON_INTERPRETER -m dvc --version
+        $PARTS_PYTHON_INTERPRETER -m dvc completion -s bash > $CRAFT_PART_INSTALL/completion.sh
+    build-attributes:
+    - enable-patchelf
