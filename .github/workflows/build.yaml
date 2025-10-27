@@ -2,11 +2,20 @@ name: Build package
 on: [push, pull_request]
 jobs:
   snap:
-    runs-on: ubuntu-22.04  # https://github.com/snapcore/action-build/issues/42
+    strategy:
+      matrix:
+        include:
+        - os: ubuntu-latest
+          arch: amd64
+        - os: ubuntu-24.04-arm
+          arch: arm64
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v5
     - uses: snapcore/action-build@v1
       id: snapcraft
+      with:
+        snapcraft-args: --build-for=${{ matrix.arch }}
     - name: Test the package
       run: |
         sudo snap install --dangerous --classic ${{ steps.snapcraft.outputs.snap }}

@@ -11,6 +11,9 @@ layout:
     bind: $SNAP_DATA/etc/dvc
   /etc/hadoop:
     bind: $SNAP_DATA/etc/hadoop
+platforms:
+  amd64:
+  arm64:
 apps:
   dvc:
     command: bin/python3 $SNAP/bin/dvc
