@@ -30,7 +30,7 @@ package-repositories:
 parts:
   dvc:
     plugin: python
-    source: https://github.com/iterative/dvc.git
+    source: https://github.com/treeverse/dvc.git
     source-tag: 3.64.1
     build-packages:
     - git

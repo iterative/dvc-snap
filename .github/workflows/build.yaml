@@ -21,7 +21,7 @@ jobs:
         sudo snap install --dangerous --classic ${{ steps.snapcraft.outputs.snap }}
         dvc doctor
         dvc doctor | grep "azure\|gdrive\|gs\|s3\|webdav"
-        dvc list https://github.com/iterative/dvc
+        dvc list https://github.com/treeverse/dvc
         dvc get https://github.com/iterative/dataset-registry get-started/data.xml -o data.xml
         sudo snap remove dvc
     - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
